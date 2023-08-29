@@ -128,11 +128,7 @@ width: 230px;
     margin-bottom: 70%;
 }}
 
-@media(max-width:550px){
-    .enlarged {
-    margin-top: 22%;
-    }
-}
+
 
 
 @media(min-width:451px) and (max-width: 1200px){.success{
