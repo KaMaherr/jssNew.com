@@ -136,7 +136,13 @@ width: 230px;
     margin-bottom: 25%;
 }}
 
-@media(max-width:450px){.margin9{
+@media(max-width:450px){
+    .margin9{
 margin-top: 150%;
-}}
+}
+.circle-button{
+    width: 55%;
+}
+
+}
 
