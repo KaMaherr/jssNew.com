@@ -2350,4 +2350,8 @@ color: #4459C3;
     font-family: calibri;
 }
 }
-
+@media (max-width:768px){
+  .mbr-navbar--transparent .mbr-navbar__section {
+    background: linear-gradient(180deg, black, transparent);
+}
+} 
