@@ -779,7 +779,6 @@ html {
 }
 .mbr-navbar {
   position: relative;
-  width: 100%;
 }
 .mbr-navbar:before {
   content: "";
