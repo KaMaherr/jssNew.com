@@ -1,29 +1,43 @@
-function toggleGallery(galleryContainer, showButton) {
-    const rectangles = galleryContainer.querySelectorAll('.rectangle');
+document.addEventListener('DOMContentLoaded', () => {
+    const galleryContainers = document.querySelectorAll('.gallery-container');
+    const buttons = document.querySelectorAll('.circle-button');
 
-    showButton.addEventListener('click', () => {
-        const allGalleryContainers = document.querySelectorAll('.gallery-container');
-        
-        allGalleryContainers.forEach(container => {
-            if (container !== galleryContainer && container.style.display === 'flex') {
-                container.style.display = 'none';
-                const correspondingButton = document.querySelector(`[data-gallery-name="${container.dataset.galleryName}"]`);
-                correspondingButton.textContent = `Show ${container.dataset.galleryName}`;
+    function toggleGallery(galleryContainer, showButton) {
+        showButton.addEventListener('click', () => {
+            galleryContainers.forEach(container => {
+                if (container !== galleryContainer) {
+                    container.style.display = 'none';
+                }
+            });
+
+            galleryContainer.style.display = galleryContainer.style.display === 'flex' ? 'none' : 'flex';
+            buttons.forEach(button => {
+                button.textContent = `Show ${button.dataset.galleryName}`;
+            });
+
+            if (galleryContainer.style.display === 'flex') {
+                showButton.textContent = `Hide ${showButton.dataset.galleryName}`;
             }
         });
-        
-        galleryContainer.style.display = galleryContainer.style.display === 'flex' ? 'none' : 'flex';
-        showButton.textContent = galleryContainer.style.display === 'flex' ? `Hide ${showButton.dataset.galleryName}` : `Show ${showButton.dataset.galleryName}`;
+    }
+
+    buttons.forEach((button, index) => {
+        const galleryContainer = document.getElementById(`galleryContainer${index + 1}`);
+        button.dataset.galleryName = `Gallery ${index + 1}`;
+        galleryContainer.dataset.galleryName = `Gallery ${index + 1}`;
+        toggleGallery(galleryContainer, button);
+
+        if (index === 0) {
+            galleryContainer.style.display = 'flex';
+            button.textContent = `Hide ${button.dataset.galleryName}`;
+        }
     });
 
+    const rectangles = document.querySelectorAll('.rectangle');
     rectangles.forEach(rectangle => {
         rectangle.addEventListener('click', (event) => {
-            const isEnlarged = rectangle.classList.contains('enlarged');
-            rectangles.forEach(r => r.classList.remove('enlarged'));
-            if (!isEnlarged) {
-                rectangle.classList.add('enlarged');
-                event.stopPropagation();
-            }
+            rectangle.classList.toggle('enlarged');
+            event.stopPropagation();
         });
 
         const closeButton = document.createElement('span');
@@ -37,24 +51,9 @@ function toggleGallery(galleryContainer, showButton) {
         });
     });
 
-    document.addEventListener('click', (event) => {
-        if (!event.target.classList.contains('rectangle') && event.target !== showButton) {
-            rectangles.forEach(rectangle => {
-                rectangle.classList.remove('enlarged');
-            });
-        }
+    document.addEventListener('click', () => {
+        rectangles.forEach(rectangle => {
+            rectangle.classList.remove('enlarged');
+        });
     });
-}
-
-for (let i = 1; i <= 9; i++) {
-    const showButton = document.getElementById(`showGallery${i}`);
-    const galleryContainer = document.getElementById(`galleryContainer${i}`);
-    showButton.dataset.galleryName = `Gallery ${i}`;
-    galleryContainer.dataset.galleryName = `Gallery ${i}`;
-    toggleGallery(galleryContainer, showButton);
-
-    if (i === 1) {
-        galleryContainer.style.display = 'flex';
-        showButton.textContent = `Hide ${showButton.dataset.galleryName}`;
-    }
-}
+});
