@@ -54,6 +54,7 @@
 
 .enlarged {
     width: 24%;
+    margin-top: -10%;
     height: auto;
     max-width: 90vw;
     max-height: 90vh;
